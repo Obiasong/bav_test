@@ -28,8 +28,8 @@
                 </div>
 
                 <div class="p-6">
-                </div>
-                <div class="p-6">
+                  <h3>@lang('product/product.user_products')</h3>
+                      {!! $product_list !!}
                 </div>
                 <div class="p-6">
                 </div>
@@ -61,8 +61,8 @@
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
                 </div> -->
-    </div>
 
+    </div>
     {{--    <div class="py-6">--}}
     {{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
     {{--            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">--}}

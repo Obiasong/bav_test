@@ -18,10 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
+Route::get('/dashboard',[ManageProductController::class,'showUserDashboard'])->name('dashboard');
 Route::get('/manage_products',[ManageProductController::class,'showProductListPage'])->name('manage_products');
 
 Route::get('/manage_products/edit',[ManageProductController::class,'getEditPage']);
@@ -35,4 +36,3 @@ Route::post('/manage_products/edit_product',[ManageProductController::class,'sho
 
 Route::get('/manage_products/create',[ManageProductController::class,'showCreateProductPage']);
 Route::post('/manage_products/create',[ManageProductController::class,'createProduct']);
-

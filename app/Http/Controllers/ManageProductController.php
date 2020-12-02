@@ -16,6 +16,15 @@ class ManageProductController extends Controller
         $this->middleware(['auth:sanctum', 'verified']);
     }
 
+    public function showUserDashboard()
+    {
+
+        $products = ManageProducts::getUserProducts(Auth::user()->id);
+        $div = 0;
+        $product_list = View::make('manage_products/product-images', compact('products', 'div'));
+
+        return view('dashboard', compact('product_list'));
+    }
 
     public function showProductListPage()
     {
@@ -69,11 +78,22 @@ class ManageProductController extends Controller
     public function saveProductChanges(Request $request)
     {
 
-        $this->validate($request, ['name' => 'required']);
+      $ver = [
+        'name' => 'required',
+        'description' => 'required',
+        'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+        'product_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+      ];
+      $this->validate($request, $ver);
 
-        $name = $request->get('name');
+      $name = $request->get('name');
+      $desc = $request->get('description');
+      $cost = $request->get('price');
+      $imageName = Auth::user()->id.time().'.'.$request->product_image->extension();
+      $request->product_image->move(public_path('images'), $imageName);
+
         $product_id = Session::get('product_id');
-        $product = ManageProducts::updateProductById($product_id, $name);
+        $product = ManageProducts::updateProductById($product_id, $name, $desc, $cost, $imageName);
 
         Session::forget('product_id');
         if ($product > 0) {
@@ -93,11 +113,21 @@ class ManageProductController extends Controller
 
     public function createProduct(Request $request)
     {
-
-        $this->validate($request, ['name' => 'required']);
+        $ver = [
+          'name' => 'required',
+          'description' => 'required',
+          'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+          'product_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+        $this->validate($request, $ver);
 
         $name = $request->get('name');
-        $product = ManageProducts::createProduct($name,Auth::user()->id);
+        $desc = $request->get('description');
+        $cost = $request->get('price');
+        $imageName = Auth::user()->id.time().'.'.$request->product_image->extension();
+
+        $request->product_image->move(public_path('images'), $imageName);
+        $product = ManageProducts::createProduct($name, $desc, $cost, $imageName, Auth::user()->id);
 
         Session::forget('product_id');
         if ($product > 0) {
@@ -108,5 +138,3 @@ class ManageProductController extends Controller
 
     }
 }
-
-

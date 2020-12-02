@@ -15,7 +15,7 @@
                 <div class="p-6">
                     <a class=" btn btn-red text-sm text-gray-600 hover:text-gray-900 "
                        href="{{url('manage_products/')}}"
-                       style="float: right;background-color: dodgerblue;color: white">
+                       style="float: right;background-color: red;color: white">
                         Return
                     </a>
                     @if (count($errors)>0)
@@ -43,23 +43,45 @@
                                              autofocus autocomplete="name"/>
                             </div>
                             <br>
+                            <div>
+                                <x-jet-label for="description" value="Product Description"/>
+                                <textarea id="description" name="description" required autofocus class="block mt-1 w-full"
+                                autocomplete="description">{!! $product->description !!}</textarea>
+                            </div>
+                            <br>
+                           <div>
+                               <x-jet-label for="price" value="Enter Cost of Product(XAF)"/>
+                               <x-jet-input id="price" class="block mt-1 w-full" type="number" name="price"
+                               value="{{ $product->cost }}" required autofocus autocomplete="price" step="0.01"/>
+                           </div>
+                            <br>
 
                             <div class="flex  justify-center mt-4">
                                 <x-jet-button class="btn btn-blue"
                                               style="background-color: dodgerblue;text-align: center">
-                                    Edit
+                                    Save Changes
                                 </x-jet-button>
                             </div>
-                        </form>
                     </div>
                     <div class="p-6 border-t border-green-200 dark:border-green-700 md:border-l">
                         <div class="ml-6">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                 <img src="{!!asset('images/Bridge_logo.png')!!}"/>
                             </div>
+                        </div><br/><br>
+                        <div>
+                          @if($product->image != NULL)
+                          <?php
+                          $pic = "images/".$product->image;
+                          ?>
+                          <img height="200px" width="200px" src="{!!asset($pic)!!}"/><br/><hr><br/>
+                          @endif
+                            <x-jet-label for="product_image" value="Change the Image for this Product"/>
+                            <input type="file" name="product_image" class="block mt-2 form-control-file">
                         </div>
                     </div>
                 </div>
+          </form>
             </div>
         </div>
     </div>
@@ -82,6 +104,3 @@
 
     </style>
 </x-app-layout>
-
-
-

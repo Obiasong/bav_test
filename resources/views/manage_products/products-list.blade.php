@@ -3,6 +3,9 @@
     <tr>
         <th data-priority="1">{{trans('product/product.sn')}}</th>
         <th data-priority="2">@lang('product/product.title')</th>
+        <th data-priority="2">@lang('product/product.description')</th>
+        <th data-priority="2">@lang('product/product.cost')</th>
+        <th data-priority="2">@lang('product/product.image')</th>
         <th data-priority="3">@lang('product/product.action')</th>
     </tr>
     </thead>
@@ -17,6 +20,19 @@
             </td>
             <td>
                 {{$item->product}}
+            </td>
+            <td>
+                {{$item->description}}
+            </td>
+            <td>
+                {{$item->cost}}
+            </td>
+            <td>
+              <?php
+              $pic = "images/".$item->image;
+              // $pic_url = $pic;
+               ?>
+                <img height="100px" width="100px" src="{!!asset($pic)!!}"/>
             </td>
             <td>
                 <div class="flex items-center justify-end mt-4">

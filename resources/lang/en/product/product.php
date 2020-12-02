@@ -19,4 +19,9 @@ return [
     'product_list' => 'List Of Products',
     'delete' => 'Delete',
     'edit' => 'Edit',
+    'cost' => 'Cost',
+    'description' => 'Product Description',
+    'image' => 'Image',
+    'user_products' => 'Your Products',
+    '' => '',
 ];
